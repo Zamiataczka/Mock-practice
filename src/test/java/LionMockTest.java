@@ -1,10 +1,13 @@
 import com.example.Feline;
 import com.example.Lion;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -37,5 +40,12 @@ public class LionMockTest {
         Lion lion = new Lion("Самец", feline);
         lion.getFood();
         Mockito.verify(feline, Mockito.times(1)).getFood(Mockito.anyString());
+    }
+
+    @Test //Проверка рациона getFood() через стаб
+    public void getLionFoodStabTest() throws Exception {
+        Lion lion = new Lion("Самец", feline);
+        Mockito.when(feline.getFood("Хищник")).thenReturn(List.of("Животные", "Птицы", "Рыба"));
+        Assert.assertEquals(List.of("Животные", "Птицы", "Рыба"), lion.getFood());
     }
 }
